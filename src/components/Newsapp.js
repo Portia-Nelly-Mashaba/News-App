@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Card from './Card'; // Assuming Card is a component that displays news
+import Card from './Card'; 
 
 const Newsapp = () => {
     const [search, setSearch] = useState('world'); // Default search query
     const [newsData, setNewsData] = useState(null);
     const [isLoading, setIsLoading] = useState(false); // State for loader
+    const [viewMode, setViewMode] = useState('all'); // State for view mode
     const API_KEY = '';
 
     // Debounce delay for user input
@@ -22,9 +23,14 @@ const Newsapp = () => {
     const getData = async () => {
         setIsLoading(true); // Show loader
         try {
-            const response = await fetch(`https://newsapi.org/v2/everything?q=${debouncedSearch}&apikey=${API_KEY}`);
-            const jsonData = await response.json();
-            setNewsData(jsonData.articles);
+            if (viewMode === 'favorites') {
+                const favorites = getFavoritesFromLocalStorage();
+                setNewsData(favorites);
+            } else {
+                const response = await fetch(`https://newsapi.org/v2/everything?q=${debouncedSearch}&apikey=${API_KEY}`);
+                const jsonData = await response.json();
+                setNewsData(jsonData.articles);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -34,10 +40,16 @@ const Newsapp = () => {
 
     useEffect(() => {
         getData();
-    }, [debouncedSearch]);
+    }, [debouncedSearch, viewMode]);
 
     const handleInput = (e) => {
         setSearch(e.target.value); // Update search term as user types
+    };
+
+    // Helper function to get favorites from localStorage
+    const getFavoritesFromLocalStorage = () => {
+        const favorites = localStorage.getItem('favorites');
+        return favorites ? JSON.parse(favorites) : [];
     };
 
     return (
@@ -46,9 +58,6 @@ const Newsapp = () => {
                 <div>
                     <h1>Headliner!</h1>
                 </div>
-                <ul>
-                    <a href="/">Favorite</a>
-                </ul>
                 <div className='SearchBar'>
                     <input
                         type='text'
@@ -57,7 +66,7 @@ const Newsapp = () => {
                         onChange={handleInput}
                         style={{ marginRight: '8px', borderRadius: '4px' }}
                     />
-                    <button onClick={getData}>Search</button>
+                    <button onClick={() => setViewMode('all')}>Search</button>
                 </div>
             </nav>
 
@@ -74,6 +83,7 @@ const Newsapp = () => {
                 <button onClick={() => setSearch('health')} style={{ backgroundColor: '#189ab4' }}>Health</button>
                 <button onClick={() => setSearch('fitness')} style={{ backgroundColor: '#ef7c8e' }}>Fitness</button>
                 <button onClick={() => setSearch('business')} style={{ backgroundColor: '#81b622' }}>Business</button>
+                <button onClick={() => setViewMode('favorites')} style={{ backgroundColor: '#e37120' }}>Favorite</button>
             </div>
 
             <div>

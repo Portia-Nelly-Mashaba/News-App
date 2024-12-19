@@ -41,6 +41,22 @@ const Card = ({ data }) => {
     return favorites.some(fav => fav.url === article.url);
   };
 
+  // Share function
+  const shareArticle = (article) => {
+    if (navigator.share) {
+      navigator.share({
+        title: article.title,
+        text: article.description,
+        url: article.url,
+      })
+      .then(() => console.log('Article shared successfully'))
+      .catch((error) => console.error('Error sharing article:', error));
+    } else {
+      // Fallback for browsers that do not support the Web Share API
+      alert('Web Share API is not supported in your browser.');
+    }
+  };
+
   return (
     <div className="cardContainer">
       {data && data.length > 0 ? (
@@ -63,7 +79,11 @@ const Card = ({ data }) => {
                 <div className="card-footer">
                   <button onClick={() => window.open(currentItem.url)}>Read More</button>
                   <div className="social-icons">
-                    <FontAwesomeIcon icon={faShareAlt} />
+                    <FontAwesomeIcon 
+                      icon={faShareAlt} 
+                      onClick={() => shareArticle(currentItem)} 
+                      style={{ cursor: 'pointer' }} 
+                    />
                     <FontAwesomeIcon 
                       icon={faHeart} 
                       onClick={() => toggleFavorite(currentItem)} 

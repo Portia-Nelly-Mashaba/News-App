@@ -1,6 +1,6 @@
 # News Application
 
-This is a **News App** built using **React.js** and **CSS**, with **NewsAPI** integrated to fetch and display the latest news articles. The app allows users to browse articles from various categories, view article details, and search for news based on keywords.
+This is a **News App** built using **React.js** and **CSS**, with **NewsAPI** integrated to fetch and display the latest news articles. The app allows users to browse articles from various categories, view article details, search for news based on keywords, and manage their favorite articles.
 
 ## Features
 
@@ -30,10 +30,20 @@ This is a **News App** built using **React.js** and **CSS**, with **NewsAPI** in
      - News source and publication date.
      - Link to the original article on the news website.
 
-5. **Responsive Design:**
+5. **Bookmark Articles:**
+   - Users can bookmark articles to save them as favorites.
+   - Bookmarked articles are stored in the **Favorites Tab**, accessible from the navigation bar.
+
+6. **Share Articles:**
+   - Users can share articles via:
+     - **Email**: Opens a mail client with the article link pre-filled.
+     - **Copy URL**: Copies the article URL to the clipboard.
+     - **Social Media**: Quick sharing options for platforms like Twitter and Facebook.
+
+7. **Responsive Design:**
    - The layout adjusts for optimal usability on mobile, tablet, and desktop devices.
 
-6. **Error Handling:**
+8. **Error Handling:**
    - Displays error messages or fallback content if the API request fails or no results are found.
 
 ### Navigation Bar:
@@ -41,13 +51,12 @@ This is a **News App** built using **React.js** and **CSS**, with **NewsAPI** in
   - Home (Displays the latest news articles).
   - Categories (Dropdown with options to filter news by category).
   - Search (Allows users to search for news articles by keyword).
+  - Favorites (Displays the list of bookmarked articles).
 
 ## Technology Stack
 - **Frontend:** React.js
 - **Styling:** CSS (custom styling for a clean and modern look)
 - **API:** NewsAPI (https://newsapi.org)
-
-
 
 ## Installation
 
@@ -82,3 +91,12 @@ To run this project locally, follow these steps:
    http://localhost:3000
    ```
 
+## Future Enhancements
+- Add sorting options (e.g., sort by date or popularity).
+- Enable offline access for bookmarked articles.
+- Integrate additional sharing platforms for articles.
+```
+
+### Next Steps:
+**a.** Would you like me to implement a specific feature, such as bookmarks or sharing, and provide the React.js code?  
+**b.** Do you want suggestions for integrating social media or email sharing APIs?
