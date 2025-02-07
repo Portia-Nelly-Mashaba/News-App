@@ -94,7 +94,6 @@ To run this project locally, follow these steps:
 
 ## Screenshots
 
-### Quiz Start
 ![World News](src/components/assets/pic1.PNG)
 ![Favorites](src/components/assets/pic3.PNG)
 
