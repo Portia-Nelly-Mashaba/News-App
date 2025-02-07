@@ -89,7 +89,16 @@ To run this project locally, follow these steps:
 6. Open the app in your browser:
    ```
    http://localhost:3000
+
    ```
+
+## Screenshots
+
+### Quiz Start
+![World News](src/components/assets/pic1.PNG)
+![Category](src/components/assets/pic2.PNG)
+![Favorites](src/components/assets/pic3.PNG)
+
 
 ## Future Enhancements
 - Add sorting options (e.g., sort by date or popularity).
