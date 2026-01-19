@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -72,7 +72,7 @@ const Card = ({ data }) => {
             <div className="card" key={index}>
               <img src={currentItem.urlToImage} alt="news thumbnail" />
               <div className="content">
-                <a onClick={() => window.open(currentItem.url)} className="title">
+                <a href={currentItem.url} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); window.open(currentItem.url); }} className="title">
                   {truncatedTitle}
                 </a>
                 <p>{truncatedDescription}</p>

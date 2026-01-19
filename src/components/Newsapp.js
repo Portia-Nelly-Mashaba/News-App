@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Card from './Card'; 
 
 const Newsapp = () => {
@@ -11,6 +11,12 @@ const Newsapp = () => {
     // Debounce delay for user input
     const [debouncedSearch, setDebouncedSearch] = useState(search);
 
+    // Helper function to get favorites from localStorage
+    const getFavoritesFromLocalStorage = () => {
+        const favorites = localStorage.getItem('favorites');
+        return favorites ? JSON.parse(favorites) : [];
+    };
+
     // Fetch data with debounce effect
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -20,7 +26,7 @@ const Newsapp = () => {
         return () => clearTimeout(timer); // Cleanup on unmount
     }, [search]);
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         setIsLoading(true); // Show loader
         try {
             if (viewMode === 'favorites') {
@@ -36,20 +42,14 @@ const Newsapp = () => {
         } finally {
             setIsLoading(false); // Hide loader
         }
-    };
+    }, [debouncedSearch, viewMode, API_KEY]);
 
     useEffect(() => {
         getData();
-    }, [debouncedSearch, viewMode]);
+    }, [getData]);
 
     const handleInput = (e) => {
         setSearch(e.target.value); // Update search term as user types
-    };
-
-    // Helper function to get favorites from localStorage
-    const getFavoritesFromLocalStorage = () => {
-        const favorites = localStorage.getItem('favorites');
-        return favorites ? JSON.parse(favorites) : [];
     };
 
     return (
