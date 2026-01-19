@@ -33,12 +33,30 @@ const Newsapp = () => {
                 const favorites = getFavoritesFromLocalStorage();
                 setNewsData(favorites);
             } else {
+                if (!API_KEY) {
+                    console.error('API_KEY is missing');
+                    setNewsData([]);
+                    return;
+                }
                 const response = await fetch(`https://newsapi.org/v2/everything?q=${debouncedSearch}&apikey=${API_KEY}`);
                 const jsonData = await response.json();
-                setNewsData(jsonData.articles);
+                
+                if (!response.ok) {
+                    console.error('API Error:', jsonData);
+                    setNewsData([]);
+                    return;
+                }
+                
+                if (jsonData.status === 'ok' && jsonData.articles) {
+                    setNewsData(jsonData.articles);
+                } else {
+                    console.error('Invalid API response:', jsonData);
+                    setNewsData([]);
+                }
             }
         } catch (error) {
             console.error('Error fetching data:', error);
+            setNewsData([]);
         } finally {
             setIsLoading(false); // Hide loader
         }
@@ -90,7 +108,11 @@ const Newsapp = () => {
                 {isLoading ? (
                     <div className='spinner'>Loading...</div> // Loading spinner
                 ) : (
-                    newsData ? <Card data={newsData} /> : <p>No data available</p>
+                    newsData && newsData.length > 0 ? (
+                        <Card data={newsData} />
+                    ) : (
+                        <p>No data available. {!API_KEY && 'API key is missing. Please check your environment variables.'}</p>
+                    )
                 )}
             </div>
         </div>
