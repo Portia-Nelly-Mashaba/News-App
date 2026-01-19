@@ -6,7 +6,7 @@ const Newsapp = () => {
     const [newsData, setNewsData] = useState(null);
     const [isLoading, setIsLoading] = useState(false); // State for loader
     const [viewMode, setViewMode] = useState('all'); // State for view mode
-    const API_KEY = '';
+    const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 
     // Debounce delay for user input
     const [debouncedSearch, setDebouncedSearch] = useState(search);
